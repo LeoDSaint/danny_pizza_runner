@@ -1,0 +1,106 @@
+--inspecting the tables
+  SELECT * FROM customer_orders;
+SELECT * FROM runner_orders;
+SELECT * FROM pizza_names;
+SELECT * FROM pizza_recipes LIMIT 5;
+SELECT * FROM pizza_toppings LIMIT 5;
+SELECT * FROM runner_orders;
+SELECT * FROM runners LIMIT 5;
+
+-- Dealing with the blank values and null values in the exclusions column in the customer_orders table
+UPDATE customer_orders 
+SET exclusions = NULL
+WHERE exclusions= 'null' OR exclusions = '';
+
+
+
+-- Dealing with the blank values and null values in the extras column in the customer_orders table
+UPDATE customer_orders 
+SET extras = NULL
+WHERE extras= 'null' OR extras  = '';
+
+
+---- Dealing with the null values in the pickup_time column of the runner_orders
+
+-- Dealing with the null values in the pickup_time column of the runner_orders
+UPDATE runner_orders 
+SET pickup_time = NULL
+WHERE pickup_time = 'null' OR pickup_time = '';
+
+
+UPDATE runner_orders
+SET distance = CASE 
+                  WHEN distance = 'null' THEN NULL
+                  WHEN distance LIKE '%km' THEN
+                    TRIM(REPLACE(distance, 'km', '')::text)
+                  ELSE distance
+               END;
+
+
+
+UPDATE runner_orders
+SET duration = CASE 
+                  WHEN duration = 'null' THEN NULL
+                  WHEN duration LIKE '%minutes' THEN
+                    TRIM(REPLACE(duration, 'minutes', '')::text)
+				  WHEN duration LIKE '%mins' THEN 
+				  	 TRIM(REPLACE(duration, 'mins', '')::text)
+				  WHEN duration LIKE '%minute' THEN
+					 TRIM(REPLACE(duration, 'minute', '')::text)
+                  ELSE duration
+               END;
+
+UPDATE runner_orders
+SET cancellation = NULL
+
+WHERE cancellation = '' OR cancellation = 'null' OR cancellation IS NULL;
+
+
+
+ALTER TABLE runner_orders
+ALTER COLUMN pickup_time TYPE TIMESTAMP USING
+pickup_time::TIMESTAMP; 
+
+ALTER TABLE runner_orders
+ALTER COLUMN distance TYPE NUMERIC(10, 2) USING 
+distance::NUMERIC(10, 2);
+
+ALTER TABLE runner_orders
+ALTER COLUMN duration TYPE NUMERIC(10,2)USING 
+duration::NUMERIC(10, 2);
+
+
+CREATE TEMPORARY TABLE customer_orders_pre AS 
+SELECT 
+    order_id,
+    customer_id,
+    pizza_id,
+    order_time,
+    extras,
+    SPLIT_PART(SPLIT_PART(exclusions, ',', numbers.n), ',', -1) AS exclusions
+FROM 
+    (SELECT 1 AS n UNION ALL
+     SELECT 2 UNION ALL
+     SELECT 3) numbers
+RIGHT JOIN 
+    customer_orders ON CHAR_LENGTH(exclusions) - CHAR_LENGTH(REPLACE(exclusions, ',', '')) >= numbers.n-1
+ORDER BY 
+    order_id, n;
+
+-- to handle the commas in the extras column
+CREATE TEMPORARY TABLE customer_orders_ AS
+SELECT 
+    order_id,
+    customer_id,
+    pizza_id,
+    order_time,
+    exclusions,
+    SPLIT_PART(SPLIT_PART(extras, ',', numbers.n), ',', -1) AS extras
+FROM 
+    (SELECT 1 AS n UNION ALL
+     SELECT 2 UNION ALL
+     SELECT 3) numbers
+RIGHT JOIN 
+    customer_orders_pre_clean ON CHAR_LENGTH(extras) - CHAR_LENGTH(REPLACE(extras, ',', '')) >= numbers.n-1
+ORDER BY 
+    order_id, n;
