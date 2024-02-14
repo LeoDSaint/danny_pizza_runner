@@ -27,7 +27,7 @@ He has prepared for us an entity relationship diagram of his database design but
 -  [Data Cleaning](https://github.com/LeoDSaint/danny_pizza_runner/blob/main/data_cleaning_pizza_runner).
 -  [Part A. Pizza Metrics](https://github.com/LeoDSaint/danny_pizza_runner/blob/main/A_Pizza_Metrics).
 -  [Part B. Runner and Customer Experience](https://github.com/LeoDSaint/danny_pizza_runner/blob/main/B_Runner_and_Customer_Experience).
--  [Part C. Ingredient Optimisation](https://github.com/LeoDSaint/danny_pizza_runner/blob/main/C.%20Ingredient%20Optimisation)
+-  [Part C. Ingredient Optimisation](https://github.com/LeoDSaint/danny_pizza_runner/blob/main/C_Ingredient_Optimization)
 
 
 
