@@ -42,7 +42,7 @@ WHERE
 GROUP BY 
     1; -- Group the results by the first column (extras)
 
----
+
 SELECT topping_name
 FROM pizza_toppings
 WHERE topping_id = '1';
@@ -84,8 +84,7 @@ FROM customer_orders;
 
 
  
- -- we'll now use the result from the table above in our CASE WHEN 
-
+ 
 SELECT 
 		order_id,
 		customer_id,
