@@ -1,6 +1,6 @@
-<h1 align="center">Ingridient Optimization</h1>
+# Ingridient Optimization
 
-<h3 align="left">1. What are the standard ingredients for each pizza?</h3>
+# 1. What are the standard ingredients for each pizza?</h3>
 
 ```
 WITH cte AS (
