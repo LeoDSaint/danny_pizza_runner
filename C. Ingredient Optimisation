@@ -1,8 +1,11 @@
+
+
+```markdown
 # Ingridient Optimization
 
-# 1. What are the standard ingredients for each pizza?</h3>
+## 1. What are the standard ingredients for each pizza?
 
-```
+```sql
 WITH cte AS (
     SELECT * 
     FROM pizza_names AS pz
@@ -22,13 +25,13 @@ FROM cte2
 GROUP BY 1;
 ```
 
-![image]()
+![image](image_link_goes_here)
 * The standard ingredients for Meatlovers pizza are bacon, bbq sauce, beef, cheese, chicken, mushrooms, pepperoni, and salami.
 * The standard ingredients for Vegetarian pizza are cheese, mushrooms, onions, peppers, tomatoes, and tomato sauce.
 
-<h3 align="left">2. What was the most commonly added extra?</h3>
+## 2. What was the most commonly added extra?
 
-
+```sql
 SELECT 
     extras, -- Select the values in the "extras" column
     COUNT(*) AS count, -- Count the occurrences of each value
@@ -45,11 +48,11 @@ SELECT topping_name
 FROM pizza_toppings
 WHERE topping_id = '1';
 ```
-* The most commonly added extra is # Bacon
+* The most commonly added extra is Bacon.
 
-<h3 align="left">3. What was the most common exclusion?</h3>
-```
+## 3. What was the most common exclusion?
 
+```sql
 SELECT 
     exclusions, -- Select the values in the "extras" column
     COUNT(*) AS count, -- Count the occurrences of each value
@@ -64,25 +67,21 @@ GROUP BY
 SELECT topping_name
 FROM pizza_toppings
 WHERE topping_id = '4';
-
 ```
-* The most common exclusions is Cheese
+* The most common exclusion is Cheese.
 
-<h3 align="left">4. Generate an order item for each record in the customers_orders table in the format of one of the following: </br>
-a. Meat Lovers </br>
-b. Meat Lovers - Exclude Beef </br>
-c. Meat Lovers - Extra Bacon </br>
-d. Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers </br></h3>
+## 4. Generate an order item for each record in the customers_orders table in the format of one of the following:
+- Meat Lovers
+- Meat Lovers - Exclude Beef
+- Meat Lovers - Extra Bacon
+- Meat Lovers - Exclude Cheese, Bacon - Extra Mushroom, Peppers
 
-```
+```sql
 -- 4. This query will return distinct combinations of pizza_id, exclusions, and extras from the customer_orders table. Each row in the result set will represent a unique combination of these three columns.
 
 SELECT DISTINCT pizza_id, exclusions, extras
 FROM customer_orders;
 
-
- 
- 
 SELECT 
 		order_id,
 		customer_id,
@@ -102,7 +101,7 @@ END AS order_item
 
 FROM customer_orders
 ORDER BY order_time;
-
+```
 ```
 
-
+This Markdown includes all the SQL queries, explanations, and output altogether.
